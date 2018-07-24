@@ -1,1 +1,1 @@
-# react-online-intensive
+# Lectrum React project - Facebook wall
