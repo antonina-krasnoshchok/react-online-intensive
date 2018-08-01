@@ -1,9 +1,9 @@
 // Core
 import React, { Component } from 'react';
-import {hot} from 'react-hot-loader';
 
 //components
 import Feed from 'components/Feed';
+import {Provider} from 'components/HOC/withProfile';
 
 //instruments
 import avatar from 'theme/assets/lisa';
@@ -14,13 +14,12 @@ const options = {
     currentUserLastName: 'Simpson'
 };
 
-@hot(module)
 export default class App extends Component {
     render () {
         return (
-            <section>
-                <Feed {...options}/>
-            </section>
+            <Provider value={options}>
+                <Feed/>
+            </Provider>
         );
     }
 }
