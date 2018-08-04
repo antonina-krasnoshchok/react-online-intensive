@@ -5,17 +5,30 @@ import React, { Component } from 'react';
 import StatusBar from 'components/StatusBar';
 import Composer from 'components/Composer';
 import Post from 'components/Post';
+import Spinner from 'components/Spinner';
 
 //instruments
 import Styles from './styles.m.css';
 
 export default class Feed extends Component {
+    state = {
+        posts:[{id:'1', comment:'Hello!', created:1533387762},
+               {id:'2',comment:'Hi! I\'m Lisa', created:1533387778}],
+        isSpinning: true
+    };
+
     render () {
+        const { posts, isSpinning } = this.state;
+        const postsJSX = posts.map((post)=>{
+            return <Post key={post.id} {...post} />
+        });
+
         return (
             <section className={Styles.feed}>
+                <Spinner isSpinning={isSpinning} />
                 <StatusBar />
                 <Composer />
-                <Post />
+                {postsJSX}
             </section>
         );
     }
