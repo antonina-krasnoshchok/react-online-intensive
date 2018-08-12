@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 
 //components
+import {withProfile} from "components/HOC/withProfile";
 import StatusBar from 'components/StatusBar';
 import Composer from 'components/Composer';
 import Post from 'components/Post';
@@ -12,6 +13,7 @@ import {Spinner} from 'components/Spinner';
 import Styles from './styles.m.css';
 import {delay, getUniqueID} from 'instruments';
 
+@withProfile
 export default class Feed extends Component {
     state = {
         posts:[{id:'1', comment:'Hello!', created:1533387762, likes:[]},
@@ -19,20 +21,12 @@ export default class Feed extends Component {
         isPostsFetching: false
     };
 
-    constructor(){
-        super();
-        this._createPost = this._createPost.bind(this);
-        this._likePost = this._likePost.bind(this);
-        this._setPostFetchingState = this._setPostFetchingState.bind(this);
-        this._removePost = this._removePost.bind(this);
-    }
-
-    _setPostFetchingState(state){
+    _setPostFetchingState=(state)=>{
         this.setState({
             isPostsFetching: state
         })
     }
-    async _createPost(comment){
+     _createPost=async(comment)=>{
         this._setPostFetchingState(true);
         const post = {
             id: getUniqueID(),
@@ -47,7 +41,7 @@ export default class Feed extends Component {
         }));
     }
 
-    async _likePost(id){
+     _likePost=async(id)=>{
         const {currentUserFirstName,currentUserLastName} = this.props;
         this._setPostFetchingState(true);
         await delay(1200);
@@ -73,7 +67,7 @@ export default class Feed extends Component {
         });
     }
 
-    async _removePost(id){
+     _removePost=async(id)=>{
         this._setPostFetchingState(true);
         await delay(1200);
         const newPosts = this.state.posts.filter((post)=>{
