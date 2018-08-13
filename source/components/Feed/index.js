@@ -84,12 +84,14 @@ export default class Feed extends Component {
     render () {
         const { posts, isPostsFetching } = this.state;
         const postsJSX = posts.map((post)=>{
-            return <Post key={post.id} {...post} _likePost={this._likePost} _removePost={this._removePost} />
+            return (
+                <Post key={post.id} {...post} _likePost={this._likePost} _removePost={this._removePost} />
+            )
         });
 
         return (
             <section className={Styles.feed}>
-                <Spinner isSpinning={isPostsFetching} />
+                {Spinner(isPostsFetching)}
                 <StatusBar />
                 <Composer _createPost={this._createPost}/>
                 {postsJSX}
