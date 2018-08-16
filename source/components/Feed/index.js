@@ -28,21 +28,21 @@ export default class Feed extends Component {
 
         socket.emit('join',GROUP_ID);
 
-        socket.on('create',(postJSON)=>{
+        socket.on('create',(postJSON) => {
             const {data: createdPost, meta} = JSON.parse(postJSON);
 
             if(`${currentUserFirstName} ${currentUserLastName}`!== `${meta.authorFirstName} ${meta.authorLastName}`){
-                this.setState(({posts})=>{
+                this.setState(({posts}) => {
                     posts: [createdPost,...posts]
                 })
             }
         });
 
-        socket.on('remove',(postJSON)=>{
+        socket.on('remove',(postJSON) => {
             const {data: removedPost, meta} = JSON.parse(postJSON);
 
             if(`${currentUserFirstName} ${currentUserLastName}`!== `${meta.authorFirstName} ${meta.authorLastName}`){
-                this.setState(({posts})=>({
+                this.setState(({posts}) => ({
                     posts: posts.filter((post)=>post.id!==removedPost.id)
                 }));
             }
@@ -67,13 +67,13 @@ export default class Feed extends Component {
         socket.removeListener('like');
     }
 
-    _setPostFetchingState=(state)=>{
+    _setPostFetchingState = (state) => {
         this.setState({
             isPostsFetching: state
         })
     }
 
-    _fetchPosts=async()=>{
+    _fetchPosts = async() => {
         this._setPostFetchingState(true);
 
         const response = await fetch(api,{
@@ -88,7 +88,7 @@ export default class Feed extends Component {
         })
     }
 
-    _createPost=async(comment)=>{
+    _createPost = async(comment) => {
         this._setPostFetchingState(true);
 
         const response = await fetch(api,{
@@ -102,13 +102,13 @@ export default class Feed extends Component {
 
         const {data:post} = await response.json();
 
-        this.setState(({posts})=>({
+        this.setState(({posts}) => ({
             posts:[post,...posts],
             isPostsFetching: false
         }));
     }
 
-     _likePost=async(id)=>{
+     _likePost = async(id) => {
         this._setPostFetchingState(true);
 
          const response = await fetch(`${api}/${id}`,{
@@ -120,7 +120,7 @@ export default class Feed extends Component {
 
         const {data:likedPost} = await response.json();
 
-        this.setState(({posts})=>({
+        this.setState(({posts}) => ({
             posts: posts.map(
                 post=>post.id===likedPost.id? likedPost:post
             ),
@@ -128,7 +128,7 @@ export default class Feed extends Component {
         }));
     }
 
-     _removePost=async(id)=>{
+     _removePost = async(id) => {
         this._setPostFetchingState(true);
 
          await fetch(`${api}/${id}`,{
@@ -138,8 +138,8 @@ export default class Feed extends Component {
              }
          });
 
-        this.setState(({posts})=>({
-            posts: posts.filter((post)=>post.id!=id),
+        this.setState(({posts}) => ({
+            posts: posts.filter((post)=>post.id!==id),
             isPostsFetching:false
         }));
     }
@@ -156,7 +156,7 @@ export default class Feed extends Component {
 
         return (
             <section className={Styles.feed}>
-                {Spinner(isPostsFetching)}
+                <Spinner isSpinning={isPostsFetching}/>
                 <StatusBar />
                 <Composer _createPost={this._createPost}/>
                 {postsJSX}

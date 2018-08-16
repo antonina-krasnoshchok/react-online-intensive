@@ -15,13 +15,13 @@ export default class StatusBar extends Component {
     }
 
     componentDidMount(){
-        socket.on('connect',()=>{
+        socket.on('connect',() => {
             this.setState({
                 online:true
             });
         });
 
-        socket.on('disconnect',()=>{
+        socket.on('disconnect',() => {
             this.setState({
                 online:false
             });
