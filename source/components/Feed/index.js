@@ -1,5 +1,7 @@
 // Core
 import React, { Component } from 'react';
+import {Transition} from 'react-transition-group';
+import {fromTo} from 'gsap';
 
 //components
 import {withProfile} from "components/HOC/withProfile";
@@ -8,6 +10,7 @@ import Composer from 'components/Composer';
 import Post from 'components/Post';
 import {Spinner} from 'components/Spinner';
 import Catcher from 'components/Catcher';
+import Postman from 'components/Postman';
 
 //instruments
 import Styles from './styles.m.css';
@@ -41,9 +44,9 @@ export default class Feed extends Component {
         socket.on('remove',(postJSON) => {
             const {data: removedPost, meta} = JSON.parse(postJSON);
 
-            if(`${currentUserFirstName} ${currentUserLastName}`!== `${meta.authorFirstName} ${meta.authorLastName}`){
+            if(`${currentUserFirstName} ${currentUserLastName}` !== `${meta.authorFirstName} ${meta.authorLastName}`){
                 this.setState(({posts}) => ({
-                    posts: posts.filter((post)=>post.id!==removedPost.id)
+                    posts: posts.filter((post)=>post.id !== removedPost.id)
                 }));
             }
         });
@@ -51,7 +54,7 @@ export default class Feed extends Component {
         socket.on('like', (postJSON) => {
             const {data: likedPost, meta} = JSON.parse(postJSON);
 
-            if(`${currentUserFirstName} ${currentUserLastName}`!== `${meta.authorFirstName} ${meta.authorLastName}`) {
+            if(`${currentUserFirstName} ${currentUserLastName}` !== `${meta.authorFirstName} ${meta.authorLastName}`) {
                 this.setState(({posts}) => ({
                     posts: posts.map(
                         post => post.id === likedPost.id ? likedPost : post
@@ -122,7 +125,7 @@ export default class Feed extends Component {
 
         this.setState(({posts}) => ({
             posts: posts.map(
-                post=>post.id===likedPost.id? likedPost:post
+                post=>post.id === likedPost.id? likedPost:post
             ),
             isPostsFetching:false
         }));
@@ -139,26 +142,42 @@ export default class Feed extends Component {
          });
 
         this.setState(({posts}) => ({
-            posts: posts.filter((post)=>post.id!==id),
+            posts: posts.filter((post) => post.id !== id),
             isPostsFetching:false
         }));
     }
 
+    _animateComposerEnter = (composer) => {
+        fromTo(
+            composer,
+            1,
+            {opacity:0, rotationX:50},
+            {opacity:1, rotationX:0}
+        );
+    }
+
     render () {
         const { posts, isPostsFetching } = this.state;
-        const postsJSX = posts.map((post)=>{
+        const postsJSX = posts.map((post) => {
             return (
-                <Catcher key={post.id} >
-                    <Post {...post} _likePost={this._likePost} _removePost={this._removePost} />
+                <Catcher key = {post.id} >
+                    <Post {...post} _likePost = {this._likePost} _removePost = {this._removePost} />
                 </Catcher>
             )
         });
 
         return (
-            <section className={Styles.feed}>
-                <Spinner isSpinning={isPostsFetching}/>
+            <section className = {Styles.feed}>
+                <Spinner isSpinning = {isPostsFetching}/>
                 <StatusBar />
-                <Composer _createPost={this._createPost}/>
+                <Transition
+                    in
+                    appear
+                    timeout={1000}
+                    onEnter={this._animateComposerEnter}>
+                    <Composer _createPost = {this._createPost}/>
+                </Transition>
+                <Postman/>
                 {postsJSX}
             </section>
         );

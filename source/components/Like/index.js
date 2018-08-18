@@ -24,15 +24,15 @@ export default class Like extends Component{
     }
 
     state = {
-        showLikers:false
+        showLikers: false
     }
 
     _showLikers = () => {
-        this.setState({showLikers:true});
+        this.setState({showLikers: true});
     }
 
     _hideLikers = () => {
-        this.setState({showLikers:false});
+        this.setState({showLikers: false});
     }
 
     _likePost = () => {
@@ -43,7 +43,7 @@ export default class Like extends Component{
     _getLikedByMe = () => {
         const {currentUserFirstName, currentUserLastName, likes} = this.props;
             return likes.some(({firstName, lastName}) => {
-                return (`${firstName} ${lastName}`===`${currentUserFirstName} ${currentUserLastName}`);
+                return (`${firstName} ${lastName}` === `${currentUserFirstName} ${currentUserLastName}`);
         });
     }
 
@@ -59,7 +59,7 @@ export default class Like extends Component{
         const {likes} = this.props;
 
         const likesJSX = likes.map(({firstName, lastName,id}) => (
-            <li key={id}>{`${firstName} ${lastName}`}</li>
+            <li key = {id}>{`${firstName} ${lastName}`}</li>
         ));
         return likes.lenght && showLikers? <ul>{likesJSX}</ul>:null;
     }
@@ -67,9 +67,9 @@ export default class Like extends Component{
     _getLikesDescription = () => {
         const {likes, currentUserLastName,currentUserFirstName} = this.props;
         const likedByMe = this._getLikedByMe();
-        if(likes.length===1 && likedByMe){
+        if(likes.length === 1 && likedByMe){
             return `${currentUserFirstName} ${currentUserLastName}`;
-        } else if (likes.length===2 && likedByMe){
+        } else if (likes.length === 2 && likedByMe){
             return `You and ${likes.length-1} other`;
         } else if (likedByMe){
             return `You and ${likes.length-1} others`;
@@ -83,11 +83,11 @@ export default class Like extends Component{
         const likesDescription = this._getLikesDescription();
 
         return (
-            <section className={Styles.like}>
-                <span className={likeStyles} onClick={this._likePost} >Like</span>
+            <section className = {Styles.like}>
+                <span className = {likeStyles} onClick = {this._likePost} >Like</span>
                 <div>
                     {likersList}
-                    <span onMouseEnter={this._showLikers} onMouseLeave={this._hideLikers}>
+                    <span onMouseEnter = {this._showLikers} onMouseLeave = {this._hideLikers}>
                         {likesDescription}
                     </span>
                 </div>

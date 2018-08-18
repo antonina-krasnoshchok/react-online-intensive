@@ -54,14 +54,14 @@ export default class Composer extends Component {
         const {comment} = this.state;
         const {avatar, currentUserFirstName} = this.props;
         return (
-                <section className={Styles.composer}>
-                    <img src={avatar} />
-                    <form onSubmit={this._handleFormSubmit}>
+                <section className = {Styles.composer}>
+                    <img src = {avatar} />
+                    <form onSubmit = {this._handleFormSubmit}>
                         <textarea
-                            placeholder={`What is on your mind, ${currentUserFirstName}?`}
+                            placeholder = {`What is on your mind, ${currentUserFirstName}?`}
                             value = {comment}
-                            onChange={this._updateComment}
-                            onKeyPress={this._submitOnEnter}
+                            onChange = {this._updateComment}
+                            onKeyPress = {this._submitOnEnter}
                         >
                         </textarea>
                         <input type='submit' value='Post' />
