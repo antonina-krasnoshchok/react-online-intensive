@@ -18,18 +18,19 @@ export default class Composer extends Component {
         comment:''
     }
 
-    _updateComment=(event)=>{
+    _updateComment = (event) => {
+        const updatedComment = event.target.value;
         this.setState({
-            comment: event.target.value
+            comment: updatedComment
         })
     }
 
-    _handleFormSubmit=(event)=>{
+    _handleFormSubmit = (event) => {
         event.preventDefault();
         this._submitComment(event);
     }
 
-    _submitComment=(event)=>{
+    _submitComment = (event) => {
         event.preventDefault();
         const {comment} = this.state;
         if (!comment){
@@ -41,7 +42,7 @@ export default class Composer extends Component {
         })
     }
 
-    _submitOnEnter=(event)=>{
+    _submitOnEnter = (event) => {
         const enterKey = event.key ==='Enter';
         if (enterKey){
             event.preventDefault();
@@ -53,14 +54,14 @@ export default class Composer extends Component {
         const {comment} = this.state;
         const {avatar, currentUserFirstName} = this.props;
         return (
-                <section className={Styles.composer}>
-                    <img src={avatar} />
-                    <form onSubmit={this._handleFormSubmit}>
+                <section className = {Styles.composer}>
+                    <img src = {avatar} />
+                    <form onSubmit = {this._handleFormSubmit}>
                         <textarea
-                            placeholder={`What is on your mind, ${currentUserFirstName}?`}
+                            placeholder = {`What is on your mind, ${currentUserFirstName}?`}
                             value = {comment}
-                            onChange={this._updateComment}
-                            onKeyPress={this._submitOnEnter}
+                            onChange = {this._updateComment}
+                            onKeyPress = {this._submitOnEnter}
                         >
                         </textarea>
                         <input type='submit' value='Post' />
