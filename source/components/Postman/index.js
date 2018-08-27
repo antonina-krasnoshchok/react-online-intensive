@@ -1,7 +1,5 @@
 //core
 import React from 'react';
-import {Transition} from 'react-transition-group';
-import {fromTo, delay} from 'gsap';
 
 //components
 import {withProfile} from 'components/HOC/withProfile';
