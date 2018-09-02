@@ -54,7 +54,7 @@ describe('instruments:', () => {
     });
 
     test('getFullApiUrl function should concatenate two arguments', () => {
-        expect(getFullApiUrl('https://name.com','path')).toHaveLength('https://name.com/path');
-        expect(getFullApiUrl('https://test.com','path1')).toHaveLength('https://test.com','path1');
+        expect(getFullApiUrl('https://name.com','path')).toBe('https://name.com/path');
+        expect(getFullApiUrl('https://test.com','path1')).toBe('https://test.com/path1');
     });
 });
