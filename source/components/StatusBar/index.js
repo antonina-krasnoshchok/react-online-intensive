@@ -5,6 +5,7 @@ import {fromTo} from 'gsap';
 
 //components
 import {withProfile} from 'components/HOC/withProfile';
+import { Link, withRouter } from 'react-router-dom';
 
 //instruments
 import Styles from './styles.m.css';
@@ -39,14 +40,45 @@ export default class StatusBar extends Component {
         fromTo(statusBar, 1, {opacity:0}, {opacity:1});
     }
 
+    _logOut = (history) =>{
+        const {_logOut} = this.props;
+        _logOut(history);
+    }
+
     render(){
-        const {avatar, currentUserFirstName, currentUserLastName} = this.props;
+        const {avatar, currentUserFirstName, isLogged} = this.props;
         const {online} = this.state;
         const statusStyle = cx(Styles.status,{
             [Styles.online]:online,
             [Styles.offline]:!online
         });
         const statusMessage = online? 'Online':'Offline';
+
+        const Logout = withRouter(
+            ({ history }) =>
+                isLogged ? (
+                    <button  onClick = {() => {this._logOut(history);}}>
+                        <span>Log Out</span>
+                    </button>
+                )
+                : null
+        );
+
+        const avatarJSX = isLogged
+            ? (
+                <Link to = '/profile'>
+                    <img src = {avatar} />
+                    <span>{currentUserFirstName}</span>
+                </Link>
+            )
+            :null;
+
+        const profileJSX = isLogged
+            ? (
+                <Link to = '/feed'>Feed</Link>
+            )
+            : null;
+
         return (
             <Transition
                 in
@@ -58,12 +90,10 @@ export default class StatusBar extends Component {
                         <div>{statusMessage}</div>
                         <span />
                     </div>
-                    <button>
-                        <img src = {avatar} />
-                        <span>{currentUserFirstName}</span>
-                        &nbsp;
-                        <span>{currentUserLastName}</span>
-                    </button>
+                    {avatarJSX}
+                    {profileJSX}
+                    <Logout />
+
                 </section>
             </Transition>
         );
