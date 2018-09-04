@@ -32,7 +32,6 @@ export class Composer extends Component {
     }
 
     _submitComment = (event) => {
-        event.preventDefault();
         const {comment} = this.state;
         if (!comment){
             return null;
@@ -40,7 +39,7 @@ export class Composer extends Component {
         this.props._createPost(comment);
         this.setState({
             comment:''
-        })
+        });
     }
 
     _submitOnEnter = (event) => {
