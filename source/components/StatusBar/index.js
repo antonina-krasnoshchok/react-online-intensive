@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import cx from 'classnames';
 import {Transition} from 'react-transition-group';
-import {fromTo} from 'gsap';
+import {TweenLite} from 'gsap';
 
 //components
 import {withProfile} from 'components/HOC/withProfile';
@@ -37,7 +37,7 @@ export default class StatusBar extends Component {
     }
 
     _animationStatusBarEnter = (statusBar) => {
-        fromTo(statusBar, 1, {opacity:0}, {opacity:1});
+        TweenLite.fromTo(statusBar, 1, {opacity:0}, {opacity:1});
     }
 
     _logOut = (history) =>{

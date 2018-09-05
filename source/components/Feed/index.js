@@ -1,7 +1,7 @@
 // Core
 import React, { Component } from 'react';
 import {Transition, CSSTransition, TransitionGroup} from 'react-transition-group';
-import {fromTo} from 'gsap';
+import {TweenLite} from 'gsap';
 
 //components
 import {withProfile} from "components/HOC/withProfile";
@@ -148,7 +148,7 @@ export default class Feed extends Component {
     }
 
     _animateComposerEnter = (composer) => {
-        fromTo(
+        TweenLite.fromTo(
             composer,
             1,
             {opacity:0, rotationX:50},
@@ -157,7 +157,7 @@ export default class Feed extends Component {
     }
 
      _animatePostmanEnter = (postman) => {
-        fromTo(
+         TweenLite.fromTo(
             postman,
             1,
             {right:-250},
@@ -166,7 +166,7 @@ export default class Feed extends Component {
     }
 
     _animatePostmanEntered = (postman) =>{
-        fromTo(
+        TweenLite.fromTo(
             postman,
             1,
             {right:30},
