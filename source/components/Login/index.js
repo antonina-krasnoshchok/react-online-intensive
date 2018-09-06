@@ -56,14 +56,6 @@ export default class Login extends Component {
         });
     }
 
-    componentDidMount(){
-        const isLogged = localStorage.getItem('isLogged');
-        if(isLogged === 'true'){
-            const {_logIn, history} = this.props;
-            _logIn(history);
-        }
-    }
-
     render() {
         const username = this.state.username;
         const password = this.state.password;

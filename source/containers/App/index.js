@@ -21,7 +21,6 @@ const options = {
     password: '123456'
 };
 
-
 const PrivateRoute = ({ component: Component, isLogged, ...rest }) => (
     <Route {...rest} render = {(props) => (
         isLogged
@@ -33,14 +32,14 @@ const PrivateRoute = ({ component: Component, isLogged, ...rest }) => (
 
 export default class App extends Component {
     state = {
-        isLogged: false
+        isLogged: localStorage.getItem('isLogged')
     };
 
     _logIn = (history) => {
         this.setState({
             isLogged: true
         },() => {
-            localStorage.setItem('isLogged', 'true');
+            localStorage.setItem('isLogged', true);
             history.push('/');
         });
     };
