@@ -8,19 +8,19 @@ import Styles from './styles.m.css';
 export default class Catcher extends Component{
     static propTypes = {
         children: object.isRequired
-    }
+    };
 
     state = {
         error: false
-    }
+    };
 
     componentDidCatch(error,stack){
         console.log('ERROR',error);
         console.log('STACKTRACE:', stack.componentStack);
         this.setState({
             error:true
-        })
-    }
+        });
+    };
 
     render () {
         if (this.state.error) {
@@ -31,8 +31,8 @@ export default class Catcher extends Component{
                         Our enginners fixing this already
                     </p>
                 </section>
-            )
+            );
         }
         return this.props.children;
-    }
-}
+    };
+};

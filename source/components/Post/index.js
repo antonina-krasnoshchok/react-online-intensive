@@ -18,19 +18,19 @@ export default class Post extends Component {
         _likePost: func.isRequired,
         id: string.isRequired,
         likes: array.isRequired
-    }
+    };
 
     _removePost = () => {
         const {_removePost,id} = this.props;
         _removePost(id);
-    }
+    };
 
     _getCross = () => {
         const {currentUserFirstName,currentUserLastName,firstName,lastName} = this.props;
         return `${firstName} ${lastName}`===`${currentUserFirstName} ${currentUserLastName}`
             ? <span className = {Styles.cross} onClick = {this._removePost}></span>
             : null;
-    }
+    };
 
     render () {
         const {avatar, firstName, lastName, comment, created, _likePost, id, likes} = this.props;
@@ -45,5 +45,5 @@ export default class Post extends Component {
                 <Like _likePost = {_likePost} id = {id} likes = {likes}/>
             </section>
         );
-    }
-}
+    };
+};

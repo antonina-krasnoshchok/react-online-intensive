@@ -13,23 +13,23 @@ export class Composer extends Component {
         _createPost: func.isRequired,
         avatar: string.isRequired,
         currentUserFirstName: string.isRequired
-    }
+    };
 
     state = {
         comment:''
-    }
+    };
 
     _updateComment = (event) => {
         const updatedComment = event.target.value;
         this.setState({
             comment: updatedComment
         })
-    }
+    };
 
     _handleFormSubmit = (event) => {
         event.preventDefault();
         this._submitComment(event);
-    }
+    };
 
     _submitComment = (event) => {
         const {comment} = this.state;
@@ -40,7 +40,7 @@ export class Composer extends Component {
         this.setState({
             comment:''
         });
-    }
+    };
 
     _submitOnEnter = (event) => {
         const enterKey = event.key ==='Enter';
@@ -48,7 +48,7 @@ export class Composer extends Component {
             event.preventDefault();
             this._submitComment(event);
         }
-    }
+    };
 
     render () {
         const {comment} = this.state;
@@ -68,7 +68,7 @@ export class Composer extends Component {
                     </form>
                 </section>
         );
-    }
-}
+    };
+};
 
 export default withProfile(Composer);

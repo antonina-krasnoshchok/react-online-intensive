@@ -13,7 +13,7 @@ const Postman = (props) => {
             <img src = {props.avatar} />
             <span>Welcome online, {props.currentUserFirstName}</span>
         </section>
-    )
-}
+    );
+};
 
 export default withProfile(Postman);

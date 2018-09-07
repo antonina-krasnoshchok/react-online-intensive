@@ -21,38 +21,38 @@ export default class Like extends Component{
                 lastName: string.isRequired
             })
         ).isRequired
-    }
+    };
 
     state = {
         showLikers: false
-    }
+    };
 
     _showLikers = () => {
         this.setState({showLikers: true});
-    }
+    };
 
     _hideLikers = () => {
         this.setState({showLikers: false});
-    }
+    };
 
     _likePost = () => {
         const {_likePost,id} = this.props;
         _likePost(id);
-    }
+    };
 
     _getLikedByMe = () => {
         const {currentUserFirstName, currentUserLastName, likes} = this.props;
             return likes.some(({firstName, lastName}) => {
                 return (`${firstName} ${lastName}` === `${currentUserFirstName} ${currentUserLastName}`);
         });
-    }
+    };
 
     _getLikeStyles = () => {
         const likedByMe = this._getLikedByMe();
         return cx(Styles.icon, {
             [Styles.liked]:likedByMe
-        })
-    }
+        });
+    };
 
     _getLikersList = () => {
         const {showLikers} = this.state;
@@ -62,7 +62,7 @@ export default class Like extends Component{
             <li key = {id}>{`${firstName} ${lastName}`}</li>
         ));
         return likes.lenght && showLikers? <ul>{likesJSX}</ul>:null;
-    }
+    };
 
     _getLikesDescription = () => {
         const {likes, currentUserLastName,currentUserFirstName} = this.props;
@@ -75,7 +75,7 @@ export default class Like extends Component{
             return `You and ${likes.length-1} others`;
         }
         return likes.length;
-    }
+    };
 
     render(){
         const likeStyles = this._getLikeStyles();
@@ -93,5 +93,5 @@ export default class Like extends Component{
                 </div>
             </section>
         );
-    }
-}
+    };
+};

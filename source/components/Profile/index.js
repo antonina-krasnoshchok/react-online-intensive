@@ -19,5 +19,5 @@ export default class Feed extends Component {
                 <img src = {avatar} />
             </section>
         );
-    }
-}
+    };
+};
