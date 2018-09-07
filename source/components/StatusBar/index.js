@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import cx from 'classnames';
 import {Transition} from 'react-transition-group';
-import {fromTo} from 'gsap';
+import {TweenLite} from 'gsap';
 
 //components
 import {withProfile} from 'components/HOC/withProfile';
@@ -15,7 +15,7 @@ import {socket} from 'socket/init';
 export default class StatusBar extends Component {
     state={
         online: false
-    }
+    };
 
     componentDidMount(){
         socket.on('connect',() => {
@@ -34,25 +34,40 @@ export default class StatusBar extends Component {
     componentWillUnmount(){
         socket.removeListener('connect');
         socket.removeListener('disconnect');
-    }
+    };
 
     _animationStatusBarEnter = (statusBar) => {
-        fromTo(statusBar, 1, {opacity:0}, {opacity:1});
-    }
+        TweenLite.fromTo(statusBar, 1, {opacity:0}, {opacity:1});
+    };
 
     _logOut = (history) =>{
         const {_logOut} = this.props;
         _logOut(history);
-    }
+    };
+
+    _getStatusBarLinks = () => {
+        const {avatar, currentUserFirstName, isLogged} = this.props;
+        return (isLogged
+            ? (
+                <>
+                    <Link to = '/profile'>
+                        <img src = {avatar} />
+                        <span>{currentUserFirstName}</span>
+                    </Link>
+                    <Link to = '/feed'>Feed</Link>
+                </>
+            ):null);
+    };
 
     render(){
-        const {avatar, currentUserFirstName, isLogged} = this.props;
+        const {isLogged} = this.props;
         const {online} = this.state;
         const statusStyle = cx(Styles.status,{
             [Styles.online]:online,
             [Styles.offline]:!online
         });
         const statusMessage = online? 'Online':'Offline';
+        const statusBarLinksJSX = this._getStatusBarLinks();
 
         const Logout = withRouter(
             ({ history }) =>
@@ -63,21 +78,6 @@ export default class StatusBar extends Component {
                 )
                 : null
         );
-
-        const avatarJSX = isLogged
-            ? (
-                <Link to = '/profile'>
-                    <img src = {avatar} />
-                    <span>{currentUserFirstName}</span>
-                </Link>
-            )
-            :null;
-
-        const profileJSX = isLogged
-            ? (
-                <Link to = '/feed'>Feed</Link>
-            )
-            : null;
 
         return (
             <Transition
@@ -90,12 +90,10 @@ export default class StatusBar extends Component {
                         <div>{statusMessage}</div>
                         <span />
                     </div>
-                    {avatarJSX}
-                    {profileJSX}
+                    {statusBarLinksJSX}
                     <Logout />
-
                 </section>
             </Transition>
         );
-    }
-}
+    };
+};

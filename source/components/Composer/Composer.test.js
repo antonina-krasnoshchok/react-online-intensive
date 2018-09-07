@@ -82,7 +82,6 @@ describe('Composer component:', () => {
 
     test('should handle form submit event', () => {
         result.find('form').simulate('submit');
-
         expect(result.state()).toEqual(initialState);
     });
 
@@ -104,11 +103,26 @@ describe('Composer component:', () => {
     });
 
     test('should handle textarea keypress event', () => {
-        _submitCommentSpy.mockReset();
+        _submitCommentSpy.mockClear();
         result.find('textarea').simulate('keyPress', {
             key: 'Enter'
         });
         expect(_submitOnEnterSpy).toHaveBeenCalledTimes(1);
         expect(_submitCommentSpy).toHaveBeenCalledTimes(1);
+    });
+
+    test('shouldn\'n submit form if pressed key isn\'t Enter', () => {
+        _submitCommentSpy.mockClear();
+        result.find('textarea').simulate('keyPress', {
+            key: 'Escape'
+        });
+        expect(_submitCommentSpy).toHaveBeenCalledTimes(0);
+    });
+
+    test('_submitComment should return null if comment is an empty string', () => {
+        _submitCommentSpy.mockClear();
+        result.find('form').simulate('submit');
+        expect(_submitCommentSpy).toHaveBeenCalledTimes(1);
+        expect(_submitCommentSpy).toHaveReturnedWith(null);
     });
 });

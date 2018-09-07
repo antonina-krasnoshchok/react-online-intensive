@@ -12,4 +12,4 @@ export const Spinner = ({isSpinning}) => {
         isSpinning ? <div className={Styles.spinner} /> : null,
         portal
     );
-}
+};

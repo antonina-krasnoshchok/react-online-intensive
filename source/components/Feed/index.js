@@ -1,7 +1,7 @@
 // Core
 import React, { Component } from 'react';
 import {Transition, CSSTransition, TransitionGroup} from 'react-transition-group';
-import {fromTo} from 'gsap';
+import {TweenLite} from 'gsap';
 
 //components
 import {withProfile} from "components/HOC/withProfile";
@@ -37,7 +37,7 @@ export default class Feed extends Component {
             if(`${currentUserFirstName} ${currentUserLastName}`!== `${meta.authorFirstName} ${meta.authorLastName}`){
                 this.setState(({posts}) => {
                     posts: [createdPost,...posts]
-                })
+                });
             }
         });
 
@@ -61,20 +61,20 @@ export default class Feed extends Component {
                     )
                 }));
             }
-        })
+        });
     }
 
     componentWillUnmount(){
         socket.removeListener('create');
         socket.removeListener('remove');
         socket.removeListener('like');
-    }
+    };
 
     _setPostFetchingState = (state) => {
         this.setState({
             isPostsFetching: state
         })
-    }
+    };
 
     _fetchPosts = async() => {
         this._setPostFetchingState(true);
@@ -88,8 +88,8 @@ export default class Feed extends Component {
         this.setState({
             posts,
             isPostsFetching:false
-        })
-    }
+        });
+    };
 
     _createPost = async(comment) => {
         this._setPostFetchingState(true);
@@ -109,7 +109,7 @@ export default class Feed extends Component {
             posts:[post,...posts],
             isPostsFetching: false
         }));
-    }
+    };
 
      _likePost = async(id) => {
         this._setPostFetchingState(true);
@@ -129,7 +129,7 @@ export default class Feed extends Component {
             ),
             isPostsFetching:false
         }));
-    }
+    };
 
      _removePost = async(id) => {
         this._setPostFetchingState(true);
@@ -145,34 +145,34 @@ export default class Feed extends Component {
             posts: posts.filter((post) => post.id !== id),
             isPostsFetching:false
         }));
-    }
+    };
 
     _animateComposerEnter = (composer) => {
-        fromTo(
+        TweenLite.fromTo(
             composer,
             1,
             {opacity:0, rotationX:50},
             {opacity:1, rotationX:0}
         );
-    }
+    };
 
      _animatePostmanEnter = (postman) => {
-        fromTo(
+         TweenLite.fromTo(
             postman,
             1,
             {right:-250},
             {right:30}
         );
-    }
+    };
 
     _animatePostmanEntered = (postman) =>{
-        fromTo(
+        TweenLite.fromTo(
             postman,
             1,
             {right:30},
             {right:-250}
         );
-    }
+    };
 
     render () {
         const { posts, isPostsFetching } = this.state;
@@ -196,7 +196,7 @@ export default class Feed extends Component {
                         />
                     </Catcher>
                 </CSSTransition>
-            )
+            );
         });
 
         return (
@@ -225,5 +225,5 @@ export default class Feed extends Component {
                 </TransitionGroup>
             </section>
         );
-    }
-}
+    };
+};

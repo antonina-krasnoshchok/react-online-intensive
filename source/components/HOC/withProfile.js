@@ -10,9 +10,9 @@ const withProfile = (Enhanceable) => {
                 <Consumer>
                     {(context) => <Enhanceable {...context} {...this.props} />}
                 </Consumer>
-            )
+            );
         }
     }
-}
+};
 
 export {Provider, Consumer, withProfile};

@@ -17,7 +17,7 @@ export default class Login extends Component {
 
     dismissError = () => {
         this.setState({ error: '' });
-    }
+    };
 
     handleSubmit = (event) => {
         event.preventDefault();
@@ -40,7 +40,7 @@ export default class Login extends Component {
         } else {
             return this.setState({ error: 'Username or Password are incorrect' });
         }
-    }
+    };
 
     handleUserChange = (event) => {
         const enteredUsername = event.target.value;
@@ -54,15 +54,7 @@ export default class Login extends Component {
         this.setState({
             password: enteredPassword,
         });
-    }
-
-    componentDidMount(){
-        const isLogged = localStorage.getItem('isLogged');
-        if(isLogged === 'true'){
-            const {_logIn, history} = this.props;
-            _logIn(history);
-        }
-    }
+    };
 
     render() {
         const username = this.state.username;
@@ -85,5 +77,5 @@ export default class Login extends Component {
                 </form>
             </div>
         );
-    }
-}
+    };
+};

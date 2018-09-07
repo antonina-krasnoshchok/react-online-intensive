@@ -1,6 +1,6 @@
 // Core
 import React, { Component } from 'react';
-import {Switch, Route, Redirect, browserHistory, withRouter} from 'react-router-dom';
+import {Switch, Route, Redirect} from 'react-router-dom';
 
 //components
 import Catcher from 'components/Catcher';
@@ -8,6 +8,7 @@ import Feed from 'components/Feed';
 import {Provider} from 'components/HOC/withProfile';
 import Profile from 'components/Profile';
 import StatusBar from 'components/StatusBar';
+import PrivateRoute from 'components/PrivateRoute';
 import Login from 'components/Login';
 
 //instruments
@@ -21,26 +22,16 @@ const options = {
     password: '123456'
 };
 
-
-const PrivateRoute = ({ component: Component, isLogged, ...rest }) => (
-    <Route {...rest} render = {(props) => (
-        isLogged
-            ? <Component {...props} />
-            : <Redirect to='/login' />
-    )} />
-);
-
-
 export default class App extends Component {
     state = {
-        isLogged: false
+        isLogged: localStorage.getItem('isLogged')
     };
 
     _logIn = (history) => {
         this.setState({
             isLogged: true
         },() => {
-            localStorage.setItem('isLogged', 'true');
+            localStorage.setItem('isLogged', true);
             history.push('/');
         });
     };
@@ -65,8 +56,8 @@ export default class App extends Component {
                 <Provider value = {fullOptions}>
                     <StatusBar />
                     <Switch>
-                        <PrivateRoute component = {Feed} path = '/feed' isLogged = {isLogged} />
-                        <PrivateRoute component = {Profile} path = '/profile' isLogged = {isLogged} />
+                        <PrivateRoute component = {Feed} path = '/feed' />
+                        <PrivateRoute component = {Profile} path = '/profile' />
                         <Route component = {Login} path = '/login' />
                         <Redirect from = '/' to =  '/feed'/>
                     </Switch>
